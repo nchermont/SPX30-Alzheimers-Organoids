@@ -4,7 +4,7 @@ library(S4Arrays)
 library(vsclust)
 library(openxlsx)
 #paste the file path changing the bar to "/" 
-dat <- read.xlsx("/Users/namoreira/Library/CloudStorage/GoogleDrive-nchmoreira0@gmail.com/My Drive/POSDOC UCSD/Experimentos/space project/spx30 data/proteomics AD /IDEP data_log10.xlsx", rowNames = TRUE)
+dat <- read.xlsx("", rowNames = TRUE)
 #condition names, add and exclude as needed, change 5 for the number of replicates in each condition
 nomes_col <- c(paste("Ground_WTAD", 1:3, sep=""), 
                paste("GROUND_APP", 1:3, sep=""), 
