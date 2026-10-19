@@ -2,7 +2,7 @@ library(readxl)
 library(dplyr)
 
 # Caminho para o arquivo Excel
-info_file <- read_excel("/Users/namoreira/Library/CloudStorage/GoogleDrive-nchmoreira0@gmail.com/My Drive/POSDOC UCSD/Experimentos/Projeto Alzheimer microglia/isogenic lines project/bulk Proteomic/microglia bulk analysis/AB42/IDEP.xlsx")
+info_file <- read_excel("")
 
 
 # Número de replicatas por condição
