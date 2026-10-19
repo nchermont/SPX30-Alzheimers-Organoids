@@ -41,9 +41,9 @@ for(pkg in cran_packages){
 # 2. FILES
 # =========================
 
-heatmap_file <- "/Users/namoreira/Library/CloudStorage/GoogleDrive-nchmoreira0@gmail.com/My Drive/POSDOC UCSD/Experimentos/space project/SPX31 data/BULK PROTEOMIC SPX31/HEATMAP TOP 1000 GERAL/heatmap_data (5).csv"
+heatmap_file <- ""
 
-output_dir <- "/Users/namoreira/Desktop/Reactome_enrichment_by_clustertop1000"
+output_dir <- ""
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 cat("Saving files in:\n", normalizePath(output_dir), "\n")
