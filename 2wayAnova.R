@@ -1,7 +1,7 @@
 library(dplyr)
 library(tidyverse)
 library(tcltk)
-data <- read.xlsx("/Users/namoreira/Library/CloudStorage/GoogleDrive-nchmoreira0@gmail.com/My Drive/POSDOC UCSD/Experimentos/space project/spx30 data/proteomics AD /ANOVA TABLE.xlsx")
+data <- read.xlsx("")
 nrep <- ncol(data)
 #factors should be in columns 2 and 3, ex: column 2 cell type, column 3 sex
 factor1 <- names(data)[2]
