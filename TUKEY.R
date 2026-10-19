@@ -1,7 +1,7 @@
 library(readxl)
 # Table format: first column (label) with conditions. Following columns: accession  
 # Replace the file path, changing '\' to '/'  
-tabela <- read_excel("/Users/namoreira/Desktop/Book12.xlsx")
+tabela <- read_excel("")
 
 pca <- prcomp(tabela[,-1], scale.=TRUE)
 summary(pca)
