@@ -1,0 +1,114 @@
+# Configuration of the paper analysis: AD lines (APP, PSEN1, PSEN2) and the
+# wild-type line (WTAD) grown on the ground (GROUND) and on the International
+# Space Station (ISS), 46 samples.
+#  * diffexp: environment x disease interaction
+#  * paper:   tables and figures of the paper
+# config/samples.tsv, config/units.tsv and data/counts/all.tsv were produced
+# with scripts/merge_inputs.py (see docs/paper_figures.md).
+
+# path or URL to sample sheet (TSV format, columns: sample_name, condition, ...)
+samples: config/samples.tsv
+# path or URL to sequencing unit sheet (TSV format, columns: sample_name, unit_name, fq1, fq2)
+units: config/units.tsv
+# precomputed STAR gene counts (merged by scripts/merge_inputs.py); not part of
+# the repository, place the matrix here before running.
+# Set to "" to compute them from the FASTQ files listed in config/units.tsv.
+counts: data/counts/all.tsv
+
+paper:
+  activate: True
+  # gene names used in the paper tables, frozen (scripts/freeze_gene_annotation.py)
+  annotation: data/gene_annotation.tsv
+
+options:
+  qc: True
+  diffexp: True
+  normalization: True
+  gsea: False
+
+
+ref:
+  # Ensembl species name
+  species: homo_sapiens
+  # Ensembl release
+  release: 100
+  # Genome build
+  build: GRCh38
+
+trimming:
+  # reads are trimmed with Trim Galore (--illumina -q 20)
+  activate: True
+
+pca:
+  activate: True
+  # one PCA plot is drawn per variable of interest; also colour by genotype
+  labels:
+    - GENOTYPE
+
+heatmap:
+  activate: True
+  labels: ""
+
+diffexp:
+  # any fold change is relative to the base level of each variable
+  variables_of_interest:
+    ENVIRONMENT:
+      base_level: GROUND
+    DISEASE:
+      base_level: HEALTH
+  batch_effects: ""
+  # Full factorial model. Coefficients (DESeq2::resultsNames):
+  #   ENVIRONMENT_ISS_vs_GROUND -> ISS effect in wtAD (HEALTH)
+  #   DISEASE_AD_vs_HEALTH      -> AD effect at GROUND
+  #   ENVIRONMENTISS.DISEASEAD  -> interaction: how much the ISS effect in AD
+  #                                differs from the ISS effect in wtAD
+  model: "~ENVIRONMENT + DISEASE + ENVIRONMENT:DISEASE"
+  contrasts:
+    # environment effect within each disease status
+    ISS-vs-GROUND_in_wtAD:
+      variable_of_interest: ENVIRONMENT
+      level_of_interest: ISS
+    ISS-vs-GROUND_in_AD: 'list(c("ENVIRONMENT_ISS_vs_GROUND", "ENVIRONMENTISS.DISEASEAD"))'
+    # disease effect within each environment
+    AD-vs-wtAD_in_GROUND:
+      variable_of_interest: DISEASE
+      level_of_interest: AD
+    AD-vs-wtAD_in_ISS: 'list(c("DISEASE_AD_vs_HEALTH", "ENVIRONMENTISS.DISEASEAD"))'
+    # interaction term: (ISS vs GROUND in AD) - (ISS vs GROUND in wtAD)
+    interaction_ISS-x-AD: 'list(c("ENVIRONMENTISS.DISEASEAD"))'
+  gsea_use_stat: False
+  pval_threshold: 0.05
+  LFC_threshold: 0.5
+  shrink_lfc: False
+
+
+params:
+  cutadapt-pe: ""
+  cutadapt-se: ""
+  star: ""
+
+gsea:
+  Hallmark_gsea:
+    category: H
+    subcategory: NULL
+    use_gsea: True
+    database: MSigDB
+    id_class: ENSEMBL
+  Hallmark_fisher:
+    category: H
+    subcategory: NULL
+    use_gsea: False
+    database: MSigDB
+    id_class: ENSEMBL
+  MsigDB_C3:
+    category: C3
+    subcategory: "TFT:GTRD"
+    use_gsea: True
+    database: MSigDB
+    id_class: ENSEMBL
+  Reactome_GSEA:
+    category: NULL
+    subcategory: NULL
+    use_gsea: True
+    database: Reactome
+    id_class: ENTREZID

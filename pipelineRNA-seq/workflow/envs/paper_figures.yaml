@@ -1,0 +1,16 @@
+# Software for workflow/scripts/paper_figures.R
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - r-base =4.4.3
+  - bioconductor-deseq2 =1.46.0
+  - bioconductor-clusterprofiler =4.14.0
+  - bioconductor-enrichplot =1.26.1
+  - bioconductor-org.hs.eg.db =3.20.0
+  - r-matrixstats =1.5.0
+  - r-ggplot2 =4.0.3
+  - r-ggrepel =0.9.8
+  - r-pheatmap =1.0.13
+  - r-venndiagram =1.8.2

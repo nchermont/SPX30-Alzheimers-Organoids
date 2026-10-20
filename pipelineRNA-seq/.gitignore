@@ -1,0 +1,16 @@
+.test/benchmarks/**
+.test/logs/**
+.test/results/**
+.test/resources/**
+.test/.snakemake/**
+benchmarks/**
+logs/**
+resources/**
+results/**
+.snakemake/**
+_data
+
+data/fastq/**
+data/counts/**
+# the repository root ignores docs/ (R template); keep this one
+!docs/

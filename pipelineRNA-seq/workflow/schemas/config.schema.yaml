@@ -1,0 +1,114 @@
+$schema: "http://json-schema.org/draft-06/schema#"
+
+description: snakemake configuration file
+
+type: object
+
+properties:
+  samples:
+    type: string
+  units:
+    type: string
+  counts:
+    type: string
+    description: >
+      optional path to a precomputed gene count matrix (TSV, first column
+      `gene`, one column per sample_name). When set, trimming, alignment and
+      read-level QC are skipped and the analysis starts from this matrix.
+
+  options:
+    type: object
+    properties:
+      qc:
+        type: boolean
+      diffexp:
+        type: boolean
+      normalization:
+        type: boolean
+      gsea:
+        type: boolean
+    required:
+      - qc
+      - diffexp
+      - normalization
+
+  ref:
+    type: object
+    properties:
+      species:
+        type: string
+      release:
+        type: integer
+      build:
+        type: string
+    required:
+      - species
+      - release
+      - build
+
+  trimming:
+    type: object
+    properties:
+      activate:
+        type: boolean
+    required:
+      - activate
+
+  pca:
+    type: object
+    properties:
+      activate:
+       type: boolean
+      labels:
+        type: 
+          - array
+          - string
+        items:
+          type: string
+    required:
+      - activate
+
+  diffexp:
+    type: object
+    properties:
+      contrasts:
+        type: object
+      model:
+        type: string
+    required:
+      - contrasts
+
+  paper:
+    type: object
+    description: tables and figures of the paper (workflow/rules/paper.smk)
+    properties:
+      activate:
+        type: boolean
+      annotation:
+        type: string
+        description: frozen gene annotation (data/gene_annotation.tsv)
+    required:
+      - activate
+
+  params:
+    type: object
+    properties:
+      cutadapt-pe:
+        type: string
+      cutadapt-se:
+        type: string
+      star: 
+        type: string
+    required:
+      - cutadapt-pe
+      - cutadapt-se
+      - star
+
+required:
+  - samples
+  - units
+  - ref
+  - pca
+  - diffexp
+  - params
+  - trimming
